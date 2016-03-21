@@ -1,0 +1,7 @@
+- Preserve State on reload
+- New tab should use the selected DB of current active tab
+- Bug: Fix SQL Keywork Capitalization
+- Truncate Text data in Cell. Click cell to view data
+===ABOVE DONE===
+- Rewrite backend in Go-lang - users shouldn't have to install NodeJS
+- Support a few other DBs like MySQL and SQLite

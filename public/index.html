@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ndbvis</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js'></script>
+
+  <style>
+  body {
+    background-color: #222;
+    color: #eee;
+    font-family: "Courier New", monospace;
+    padding: 0px;
+  }
+
+  .SQLEditor_btn {
+    border-radius: 0px;
+    background-color: black;
+    border: 0px solid #222;
+    border-right: 1px solid #222;
+    border-left: 1px solid #222;
+    min-height: 30px;
+    text-transform: uppercase;
+    outline: none;
+  }
+  .SQLEditor_btn:hover {
+    background-color: orange;
+  }
+  .SQLEditor_error {
+    color: red;
+  }
+  .SQLEditor_table {
+    font-size: small;
+    width: 100%;
+    font-family: "Courier New", monospace;
+  }
+  .SQLEditor_table thead {
+    background-color: #444;
+    color: #fff;
+  }
+  .SQLEditor_table thead th {
+    border: 1px solid #555;
+    border-top: 0px solid red;
+    border-bottom: 1px solid #666;
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-weight: normal;
+    white-space: nowrap;
+  }
+  .SQLEditor_table tr.colTypes th {
+    color: #fff;
+    font-size: xx-small;
+    background-color: #222;
+    border-bottom: 1px solid orange;
+    border-top: 1px solid orange;
+  }
+  .SQLEditor_table tbody td {
+    border: 1px solid  #444;
+    padding: 5px;
+    white-space: nowrap;
+  }
+  .SQLEditor_table tbody td.null {
+    color: rgba(100, 100, 100, 0.2);
+  }
+  .SQLEditor_table tbody tr:nth-child(even) {
+    background-color: #1e1e1e;
+  }
+  .SQLEditor_table tbody tr:hover {
+    background-color: rgba(100, 0, 0, 0.1);
+  }
+  .SQLEditor_table tbody tr td:hover {
+    background-color: #400;
+  }
+  .page {
+    background-color: rgba(0,0,0,0.5);
+    border: 1px solid #333; 
+    min-height: 500px;
+  }
+  .nav-pills li a {
+    border-radius: 0px !important;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin:0px;
+  }
+  .nav-pills li.active a{
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+    border-top: 1px solid #333;
+    background-color: rgba(0,0,0,0.5);
+  }
+  .container-fluid {
+    padding: 5px;
+  }
+  .inputarea {
+    display: block;
+    background-color: transparent;
+    color: white;
+    border: 0px solid #333;
+    border-top: 1px solid #222;
+    border-bottom: 1px solid #333;
+    resize: vertical;
+    width: 100%;
+    min-height: 5em;
+    outline: none;
+    font-family: "Courier New", monospace;
+  }
+  .inputarea::-webkit-scrollbar{background-color:#151A1F;border-left:1px solid #252A2F;width:5px;}
+  .inputarea::-webkit-scrollbar-thumb{background-color:#555A60;}
+  .output {
+    overflow: auto;
+  }
+  .output::-webkit-scrollbar {
+    height: 20px;
+  }
+  .output::-webkit-scrollbar-track {
+    background-color: #222;
+    border-top: 2px solid #444;
+  }
+  .output::-webkit-scrollbar-thumb {
+    background-color: #444;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background-color: #222;
+    border-left: 1px solid #444;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #444;
+  }
+
+  .EditorPage_closeTabBtnbtn:hover {
+    color: orange;
+  }
+
+  .ConnectionManager {
+    min-height: 30px;
+    min-width:100px;
+  }
+
+  .ConnectionManager select {
+    background-color: transparent;
+    min-height:30px;
+    outline: none;
+    border: 0px solid red;
+    border-left: 1px solid #333;
+    font-family: "Courier New", Monospace;
+  }
+
+  .ConnectionManager select option{
+    color: #fff;
+    font-size: large;
+    background-color:#333;
+  }
+  
+  .SQLEditor_wIcon {
+    font-size: large;
+    margin:5px;
+  }
+
+  .DisplayerCurtain {
+    display: none;
+    position: fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    height:100%;
+    z-index: 99;
+    background-color: rgba(0, 0, 0, 0.95);
+  }
+  .DisplayerWindow {
+    display: none;
+    position: fixed;
+    border: 1px solid #ddd;
+    background-color: #222;
+    box-shadow: 0px 0px 3px #aaa;
+    z-index: 100;
+    overflow: auto;
+  }
+  .DisplayerWindow .header {
+    border-bottom: 1px solid #444;
+    overflow: auto;
+    padding-bottom: 2px;
+  }
+  .DisplayerWindow .content {
+    padding: 1em;
+  }
+  .DisplayerWindow .close {
+    margin:0.2em;
+    margin-right:0.3em;
+    color: #ddd;
+    text-shadow: none !important;
+    opacity: 1.0 !important;
+  }
+  .DisplayerWindow .close:hover {
+    color: orange;
+  }
+  .container-fluid {
+    padding: 0px;
+  }
+  .json-data {
+    border-left: 1px solid #ccc;
+    padding: 5px;
+    font-size: x-small;
+    font-family: "Courier New", Monospace;
+    word-wrap: break-word;
+    margin-left:3px;
+  }
+  .json-key {cursor: pointer;}
+  .json-key:hover { color: orange; }
+  .json-data > .json-data { display: none; }
+  </style>
+
+  <script src='/js/Restorer.js'></script>
+  <script src='/js/Displayer.js'></script>
+  <script src='/js/SQLEditor.js'></script>
+  <script src='/js/EditorPage.js'></script>
+  <script src='/js/ConnectionManager.js'></script>
+
+  <script>
+    var epage = null;
+    var restorer = null;
+    var displayer = null;
+
+
+    $(function() {
+      displayer = new Displayer({
+        curtain_id: 'displayer_curtain',
+        window_id: 'displayer_window'
+      });
+      epage = new EditorPage({
+        pages_id: 'pages',
+        nav_id: 'nav',
+        addPageBtn_id: 'add_page_btn'
+      });
+
+      restorer = new Restorer({
+        epage: epage
+      });
+
+      restorer.restore();
+
+      // var rSQL = ["select * from users", "select * node_stats"];
+      // for(var i in rSQL) { var sql = rSQL[i];
+      //   var page = epage.addPage(); 
+      //   page.sqlEditor.$input.val(sql);
+      // }
+
+
+
+      //for testing only
+      // var testEditor = epage.pages[Object.keys(epage.pages)[0]].sqlEditor;
+      // testEditor.$input.val("select * from users");
+      // testEditor.execute();
+    });
+  </script>
+</head>
+<body>
+
+  <div class='DisplayerCurtain' id='displayer_curtain'></div>
+  <div class='DisplayerWindow' id='displayer_window'>
+    <div class='header'>
+      <span class='close'><i class='fa fa-times'></i></span>
+    </div>
+    <div class='content'>
+    </div>
+  </div>
+
+  <div class='container-fluid'>
+
+    <ul class='nav nav-pills' id='nav'>
+
+      <li class='inactive' id='add_page_btn'><a href='#'>
+        <i class='fa fa-plus'></i>
+      </a></li>
+
+    </ul>
+
+    <div class='pages' id='pages'>
+
+    </div>
+
+  </div>
+</body>
+</html>

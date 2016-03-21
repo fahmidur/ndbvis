@@ -1,0 +1,3 @@
+{
+  "DB_NickName": "postgres://dbname:password@localhost:5432/dbname",
+}
