@@ -221,25 +221,42 @@
     width: 20%;
     display: inline-block;
   }
-  .DisplayerWindow .body {
+  .DisplayerWindow .main {
     display: inline-block;
     width: 80%;
     border: 0px solid red;
     vertical-align: top;
   }
-  .prop {
+  .DisplayerWindow .cprop {
+    font-weight: bold;
+    border-bottom: 1px dotted orange;
+  }
+  .DisplayerWindow .cprop .name {
+    color: orange;
+  }
+  .DisplayerWindow .cprop .type {
+    color: #777;
+    margin-left:0.7em;
+  }
+  .DisplayerWindow .prop {
     border: 1px solid rgba(0, 0, 0, 0.2);
     flex-grow: 1;
     background-color: rgba(0, 0, 0, 0.1);
     margin: 0.1em;
   }
-  .prop .name {
+
+  .DisplayerWindow .prop:hover {
+    border: 1px solid orange;
+    color: orange;
+    cursor: pointer;
+  }
+  .DisplaerWindow .prop .name {
     display: block;
     padding: 0.2em;
     font-size: small;
     color: #aaa;
   }
-  .prop .type {
+  .DisplayerWindow .prop .type {
     display: block;
     background-color: rgba(0, 0, 0, 0.3);
     font-size: x-small;
