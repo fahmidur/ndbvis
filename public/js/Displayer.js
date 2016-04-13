@@ -188,5 +188,6 @@ Displayer.prototype.show = function() {
   self.$window.fadeIn(self.ANIMATION_SPEED, function() {
     console.log('** setting visible = true');
     self.visible = true;
+    self.$window.animate({scrollTop: 0}, 0);
   });
 }
