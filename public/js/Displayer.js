@@ -117,16 +117,20 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
 
   self.$content.empty();
 
-
-  var $fields = $("<div class='fields'></div>");
+  self.$fields = $("<div class='fields'></div>");
+  var i = 0;
   for(var k in rowData) {
     var $button = $("<div class='prop'><span class='name'>"+k+"</span><span class='type'>"+prop2type[prop]+"</span></div>");
     if(k === prop) {
       $button.addClass('active');
     }
-    $fields.append($button);
+    self.$fields.append($button);
   }
-  self.$content.append($fields);
+  self.$content.append(self.$fields);
+
+  self.$body = $("<div class='body'></div>");
+  self.$body.html(Displayer.displayify(rowData[prop]));
+  self.$content.append(self.$body);
 
   
   // if(typeof data === 'string' || typeof data === 'number') {

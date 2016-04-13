@@ -181,6 +181,9 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
         var thead_colTypes = document.createElement('tr');
           thead_colTypes.className = 'colTypes';
           for(var i in types) { var type = types[i];
+            if(type.data_type === 'character varying') {
+              type.data_type = 'varchar';
+            }
             var th = document.createElement('th');
             th.innerHTML = type.data_type;
             thead_colTypes.appendChild(th);

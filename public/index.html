@@ -215,18 +215,29 @@
   .json-key {cursor: pointer;}
   .json-key:hover { color: orange; }
   .json-data > .json-data { display: none; }
-  .fields {
-    display: flex;
+
+  .DisplayerWindow .fields {
+    /*display: flex;*/
+    width: 20%;
+    display: inline-block;
+  }
+  .DisplayerWindow .body {
+    display: inline-block;
+    width: 80%;
+    border: 0px solid red;
+    vertical-align: top;
   }
   .prop {
     border: 1px solid rgba(0, 0, 0, 0.2);
     flex-grow: 1;
     background-color: rgba(0, 0, 0, 0.1);
+    margin: 0.1em;
   }
   .prop .name {
     display: block;
     padding: 0.2em;
     font-size: small;
+    color: #aaa;
   }
   .prop .type {
     display: block;
