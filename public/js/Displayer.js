@@ -131,7 +131,7 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
   
 
   self.$main = $("<div class='main'></div>");
-    self.$cprop = $("<div class='cprop'><span class='name'>"+prop+"</span><span class='type'>"+propType+"</span></div>");
+    self.$cprop = $("<div class='cprop'><span class='name'>"+prop+"</span><span class='type'>("+propType+")</span></div>");
     self.$main.append(self.$cprop);
 
     self.$body = $("<div class='body'></div>");
