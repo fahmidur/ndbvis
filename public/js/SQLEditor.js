@@ -160,16 +160,17 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
     self.$wIcon.hide();
     return self.$output.html("0 Rows Returned");
   }
-  var headers = Object.keys(rows[0]);
-  var header_to_type = {};
+  var properties = Object.keys(rows[0]);
+  self.prop_to_type = {};
 
   self.rows = rows;
+  self.types = [];
 
   var table = document.createElement('table');
     table.className = 'SQLEditor_table'
     var thead = document.createElement('thead');
       var thead_colNames = document.createElement('tr');
-        for(var i in headers) { var header = headers[i];
+        for(var i in properties) { var header = properties[i];
           var th = document.createElement('th');
           th.innerHTML = header;
           thead_colNames.appendChild(th);
@@ -183,9 +184,10 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
             var th = document.createElement('th');
             th.innerHTML = type.data_type;
             thead_colTypes.appendChild(th);
-            header_to_type[type.column_name] = type.data_type;
+            self.prop_to_type[type.column_name] = type.data_type;
+            self.types.push(type.data_type);
           }
-        thead.appendChild(thead_colTypes);  
+        thead.appendChild(thead_colTypes);
       }
       
     table.appendChild(thead);
@@ -193,7 +195,7 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
     var tbody = document.createElement('tbody');
     for(var k in rows) { var row = rows[k];
       var tr = document.createElement('tr');
-      for(var i in headers) { var header = headers[i];
+      for(var i in properties) { var header = properties[i];
         var td = document.createElement('td');
         var value = row[header];
         var displayValue = Displayer.displayify((typeof value === 'object') ? JSON.stringify(value) : value, 100);
@@ -201,7 +203,7 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
 
         td.setAttribute('data-prop', header);
         td.setAttribute('data-row', k);
-        td.setAttribute('data-type', header_to_type[header]);
+        td.setAttribute('data-type', self.prop_to_type[header]);
 
         if(value === null) {
           td.className += ' null'
@@ -222,22 +224,19 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
     var rowNum = $this.data('row');
     var prop = $this.data('prop');
     var type = $this.data('type');
-    self.displayField(self.rows[rowNum][prop], type);
+    self.displayRowField(self.rows[rowNum], prop, type);
   });
 };
 
-SQLEditor.prototype.displayField = function(data, type) {
+SQLEditor.prototype.displayRowField = function(rowData, prop, propType) {
   var self = this;
-
-  console.log("** displayField. TYPE = ", type);
-  console.log(data);
 
   if(typeof displayer === 'undefined') {
     console.error("** displayField. Displayer not found");
     return;
   }
 
-  displayer.display(data);
+  displayer.display(rowData, prop, propType, self.prop_to_type);
 };
 
 SQLEditor.prototype.execute = function() { var self = this;

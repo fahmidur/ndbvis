@@ -189,7 +189,7 @@
     padding-bottom: 2px;
   }
   .DisplayerWindow .content {
-    padding: 1em;
+    padding: 0.0em;
   }
   .DisplayerWindow .close {
     margin:0.2em;
@@ -215,6 +215,26 @@
   .json-key {cursor: pointer;}
   .json-key:hover { color: orange; }
   .json-data > .json-data { display: none; }
+  .fields {
+    display: flex;
+  }
+  .prop {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .prop .name {
+    display: block;
+    padding: 0.2em;
+    font-size: small;
+  }
+  .prop .type {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.3);
+    font-size: x-small;
+    color: #555;
+    padding: 0.2em;
+  }
   </style>
 
   <script src='/js/Restorer.js'></script>

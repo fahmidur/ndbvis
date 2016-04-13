@@ -108,22 +108,38 @@ Displayer.prototype.wireRenderJSON = function(el) {
   });  
 }
 
-Displayer.prototype.display = function(data) {
+Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
   var self = this;
 
-  if(!data) {
+  if(!rowData) {
     return;
   }
+
+  self.$content.empty();
+
+
+  var $fields = $("<div class='fields'></div>");
+  for(var k in rowData) {
+    var $button = $("<div class='prop'><span class='name'>"+k+"</span><span class='type'>"+prop2type[prop]+"</span></div>");
+    if(k === prop) {
+      $button.addClass('active');
+    }
+    $fields.append($button);
+  }
+  self.$content.append($fields);
+
   
-  if(typeof data === 'string' || typeof data === 'number') {
-    data = ''+data;
-    self.$content.html(Displayer.displayify(data));  
-  }
-  else
-  if(typeof data === 'object') {
-    self.$content.html(self.renderJSON(data));
-    self.wireRenderJSON();
-  }
+  // if(typeof data === 'string' || typeof data === 'number') {
+  //   data = ''+data;
+  //   self.$content.html(Displayer.displayify(data));  
+  // }
+  // else
+  // if(typeof data === 'object') {
+  //   self.$content.html(self.renderJSON(data));
+  //   self.wireRenderJSON();
+  // }
+
+
 
   self.show();
   self.adjustWindow();
