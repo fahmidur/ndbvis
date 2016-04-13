@@ -1,6 +1,5 @@
 var Displayer = function(opts) {
   var self = this;
-  console.log("**** opts = ", opts);
   self.$curtain = $('#'+opts.curtain_id);
   if(!self.$curtain || self.$curtain.length === 0) {
     throw "Displayer. element from curtain_id not found";
@@ -191,7 +190,6 @@ Displayer.prototype.hide = function() {
   $('body').css('overflow', 'inherit');
   self.$window.fadeOut(self.ANIMATION_SPEED);
   self.$curtain.fadeOut(self.ANIMATION_SPEED, function() {
-    console.log('** setting visible = false');
     self.visible = false;
   });
 };
@@ -201,7 +199,6 @@ Displayer.prototype.show = function() {
   $('body').css('overflow', 'hidden');
   self.$curtain.fadeIn(self.ANIMATION_SPEED);
   self.$window.fadeIn(self.ANIMATION_SPEED, function() {
-    console.log('** setting visible = true');
     self.visible = true;
     self.$window.animate({scrollTop: 0}, 0);
   });

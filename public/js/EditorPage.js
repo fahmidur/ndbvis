@@ -27,7 +27,7 @@ var EditorPage = function(opts) { var self = this;
   console.log('EditorPage. self = ', self);
 };
 
-EditorPage.prototype.addPage = function(override_pageID) { var self = this;
+EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var self = this;
   var pageID = null;
   var pageNumber = Object.keys(self.pages).length + 1;
   var pageTimestamp = ""+(new Date()).getTime();
@@ -50,12 +50,14 @@ EditorPage.prototype.addPage = function(override_pageID) { var self = this;
   var sqlEditor = new SQLEditor({
     input_id: 'SQLEditor-'+pageID+"-input",
     output_id: 'SQLEditor-'+pageID+"-output",
-    pageID: pageID
+    pageID: pageID,
+    editorPage: self
   });
 
-  function activatePage() {
-    var old_page = null;
-    if( (old_page = self.pages[self.active_pageID]) ) {
+  function activatePage(preventStore) {
+    var this_page = self.pages[pageID];
+    var old_page = self.pages[self.active_pageID];
+    if(old_page && this_page.newborn) {
       sqlEditor.connectionManager.setCurrentDB(old_page.sqlEditor.connectionManager.getCurrentDB());
     }
     self.hideAllPages();
@@ -64,7 +66,9 @@ EditorPage.prototype.addPage = function(override_pageID) { var self = this;
     self.active_pageID = pageID;
     self.active_pageID_history.unshift(pageID);
     sqlEditor.focus();
-    if(restorer && typeof restorer.store === 'function') {restorer.store();}
+    if(typeof preventStore === 'undefined') {
+      if(restorer && typeof restorer.store === 'function') {restorer.store('EditorPage. activatePage');}  
+    }
   }
 
   self.pages[pageID] = {
@@ -72,6 +76,7 @@ EditorPage.prototype.addPage = function(override_pageID) { var self = this;
     pageTimeStamp: pageTimestamp,
     pageID: pageID,
     sqlEditor: sqlEditor,
+    newborn: (typeof fromRestorer === 'undefined') ? true : false,
     el: {
       tab: tab,
       page: page
@@ -87,7 +92,7 @@ EditorPage.prototype.addPage = function(override_pageID) { var self = this;
       $el.remove();
     }
     delete self.pages[pageID];
-    if(restorer && typeof restorer.store === 'function') {restorer.store();}
+    if(restorer && typeof restorer.store === 'function') {restorer.store('EditorPage. pageClose');}
     var new_history = [];
     for(var i in self.active_pageID_history) { var _pageID = self.active_pageID_history[i];
       if(_pageID !== pageID) {
@@ -100,8 +105,10 @@ EditorPage.prototype.addPage = function(override_pageID) { var self = this;
 
   
 
-  tab.on('click', activatePage);
-  activatePage();
+  tab.on('click', function(e) { activatePage(); });
+  if(typeof fromRestorer === 'undefined') {
+    activatePage();
+  }
   return self.pages[pageID];
 };
 

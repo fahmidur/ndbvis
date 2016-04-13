@@ -30,9 +30,12 @@ ConnectionManager.prototype.getCurrentDB = function() {
 
 ConnectionManager.prototype.setCurrentDB = function(dbname) {
   var self = this;
-  if(!dbname) { return; }
+  if(!dbname) { 
+    return false;
+  }
   if(self.$select) {
-    return self.$select.val(dbname);  
+    self.current_dbname = dbname;
+    return self.$select.val(dbname);
   } else {
     self.dbname_queue.push(dbname);
     return true;
@@ -48,9 +51,6 @@ ConnectionManager.prototype.render = function() {
   for(var dbname in ConnectionManager.databases) { 
     var connString = ConnectionManager.databases[dbname];
     var optionNode = $("<option value='"+dbname+"'>"+dbname+"</option>");
-    if(self.current_dbname && dbname == self.selected_dbname) {
-      optionNode.attr('selected', 'true');
-    }
     self.$select.append(optionNode);
   }
   self.$element.append(self.$select);
@@ -59,7 +59,7 @@ ConnectionManager.prototype.render = function() {
   }
   self.$select.on('change', function() {
     self.current_dbname = $(this).val();
-    if(restorer && typeof restorer.store === 'function') {restorer.store();}
+    if(restorer && typeof restorer.store === 'function') {restorer.store('ConnectionManager. change');}
   });
 }
 
