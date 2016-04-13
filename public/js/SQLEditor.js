@@ -155,6 +155,13 @@ SQLEditor.prototype.getSQL = function() {
   return self.$input.val();
 };
 
+SQLEditor.prototype.translateType = function(type) {
+  if(type === 'character varying') {
+    return 'varchar';
+  }
+  return type;
+}
+
 SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
   if(rows.length === 0) {
     self.$wIcon.hide();
@@ -181,9 +188,7 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
         var thead_colTypes = document.createElement('tr');
           thead_colTypes.className = 'colTypes';
           for(var i in types) { var type = types[i];
-            if(type.data_type === 'character varying') {
-              type.data_type = 'varchar';
-            }
+            type.data_type = self.translateType(type.data_type);
             var th = document.createElement('th');
             th.innerHTML = type.data_type;
             thead_colTypes.appendChild(th);
