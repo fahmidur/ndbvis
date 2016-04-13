@@ -134,6 +134,8 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
 
   self.$main = $("<div class='main'></div>");
     self.$cprop = $("<div class='cprop'><span class='name'>"+prop+"</span><span class='type'>("+propType+")</span></div>");
+      self.$ftb = $("<span class='field-toggle'><i class='fa fa-chevron-left'></i></span>");
+      self.$cprop.prepend(self.$ftb);
     self.$main.append(self.$cprop);
 
     self.$body = $("<div class='body'></div>");
@@ -149,16 +151,16 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
     self.$main.append(self.$body);
 
   self.$content.append(self.$main);
-  
-  // if(typeof data === 'string' || typeof data === 'number') {
-  //   data = ''+data;
-  //   self.$content.html(Displayer.displayify(data));  
-  // }
-  // else
-  // if(typeof data === 'object') {
-  //   self.$content.html(self.renderJSON(data));
-  //   self.wireRenderJSON();
-  // }
+
+  self.$ftb.on('click', function() {
+    if(self.$fields.is(':visible')) {
+      self.$fields.hide();
+      $(this).find('i').removeClass('fa-chevron-left').addClass('fa-chevron-right');
+    } else {
+      self.$fields.show();
+      $(this).find('i').removeClass('fa-chevron-right').addClass('fa-chevron-left');
+    }
+  });
 
   self.show();
   self.adjustWindow();
