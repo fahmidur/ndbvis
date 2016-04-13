@@ -108,10 +108,13 @@ Displayer.prototype.wireRenderJSON = function(el) {
   });  
 }
 
-Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
+Displayer.prototype.display = function(rowData, prop, prop2type) {
   var self = this;
 
-  console.log('** displayer. display. rowData = ', rowData, ' prop = ', prop);
+  console.log('** displayer. display. rowData = ', rowData, ' prop = ', prop, 'prop2type = ', prop2type);
+
+  var data = Displayer.displayify(rowData[prop]);
+  var propType = prop2type[prop];
 
   if(!rowData) {
     return;
@@ -122,15 +125,18 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
   self.$fields = $("<div class='fields'></div>");
   var i = 0;
   for(var k in rowData) {
-    var $button = $("<div class='prop'><span class='name'>"+k+"</span><span class='type'>"+prop2type[prop]+"</span></div>");
+    var $button = $("<div class='prop'><span class='name'>"+k+"</span><span class='type'>"+prop2type[k]+"</span></div>");
+    $button.attr('data-name', k);
     if(k === prop) {
       $button.addClass('active');
     }
     self.$fields.append($button);
   }
   self.$content.append(self.$fields);
-
-  
+  self.$fields.find('.prop').on('click', function(e) {
+    var propName = $(this).data('name');
+    self.display(rowData, propName, prop2type);
+  });
 
   self.$main = $("<div class='main'></div>");
     self.$cprop = $("<div class='cprop'><span class='name'>"+prop+"</span><span class='type'>("+propType+")</span></div>");
@@ -139,7 +145,7 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
     self.$main.append(self.$cprop);
 
     self.$body = $("<div class='body'></div>");
-    var data = Displayer.displayify(rowData[prop]);
+    
 
     if(typeof data === 'string' || typeof data === 'number') {
       self.$body.html(data);  

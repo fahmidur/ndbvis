@@ -232,19 +232,14 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
     var rowNum = $this.data('row');
     var prop = $this.data('prop');
     var type = $this.data('type');
-    self.displayRowField(self.rows[rowNum], prop, type);
+
+    if(typeof displayer === 'undefined') {
+      console.error("** displayField. Displayer not found");
+      return;
+    }
+
+    displayer.display(self.rows[rowNum], prop, self.prop_to_type);
   });
-};
-
-SQLEditor.prototype.displayRowField = function(rowData, prop, propType) {
-  var self = this;
-
-  if(typeof displayer === 'undefined') {
-    console.error("** displayField. Displayer not found");
-    return;
-  }
-
-  displayer.display(rowData, prop, propType, self.prop_to_type);
 };
 
 SQLEditor.prototype.execute = function() { var self = this;
