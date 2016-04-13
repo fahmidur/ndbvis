@@ -111,6 +111,8 @@ Displayer.prototype.wireRenderJSON = function(el) {
 Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
   var self = this;
 
+  console.log('** displayer. display. rowData = ', rowData, ' prop = ', prop);
+
   if(!rowData) {
     return;
   }
@@ -135,7 +137,15 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
     self.$main.append(self.$cprop);
 
     self.$body = $("<div class='body'></div>");
-    self.$body.html(Displayer.displayify(rowData[prop]));
+    var data = Displayer.displayify(rowData[prop]);
+
+    if(typeof data === 'string' || typeof data === 'number') {
+      self.$body.html(data);  
+    }
+    else
+    if(typeof data === 'object') {
+      self.$body.html(JSON.stringify(data));
+    }
     self.$main.append(self.$body);
 
   self.$content.append(self.$main);
@@ -149,8 +159,6 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
   //   self.$content.html(self.renderJSON(data));
   //   self.wireRenderJSON();
   // }
-
-
 
   self.show();
   self.adjustWindow();
