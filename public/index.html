@@ -189,6 +189,7 @@
     padding-bottom: 2px;
   }
   .DisplayerWindow .content {
+    display: flex;
     padding: 0.0em;
   }
   .DisplayerWindow .close {
@@ -217,13 +218,13 @@
   .json-data > .json-data { display: none; }
 
   .DisplayerWindow .fields {
-    /*display: flex;*/
-    width: 20%;
+    width: auto;
+    flex-basis: content;
     display: inline-block;
   }
   .DisplayerWindow .main {
     display: inline-block;
-    width: 80%;
+    flex-grow: 1;
     border: 0px solid red;
     vertical-align: top;
   }

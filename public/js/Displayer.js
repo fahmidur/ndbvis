@@ -139,7 +139,6 @@ Displayer.prototype.display = function(rowData, prop, propType, prop2type) {
     self.$main.append(self.$body);
 
   self.$content.append(self.$main);
-
   
   // if(typeof data === 'string' || typeof data === 'number') {
   //   data = ''+data;
