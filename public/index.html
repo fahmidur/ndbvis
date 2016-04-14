@@ -318,21 +318,8 @@
       restorer = new Restorer({
         epage: epage
       });
-
+      
       restorer.restore();
-
-      // var rSQL = ["select * from users", "select * node_stats"];
-      // for(var i in rSQL) { var sql = rSQL[i];
-      //   var page = epage.addPage();
-      //   page.sqlEditor.$input.val(sql);
-      // }
-
-
-
-      //for testing only
-      // var testEditor = epage.pages[Object.keys(epage.pages)[0]].sqlEditor;
-      // testEditor.$input.val("select * from users");
-      // testEditor.execute();
     });
   </script>
 </head>
