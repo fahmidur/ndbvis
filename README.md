@@ -20,7 +20,6 @@ and so this project is the result of much frustration.
 * Run: npm install
 * Run: node ndbvis.js
 
-## TODO
+## TODO Subset
 * Rewrite backend in Go-lang - users shouldn't have to install NodeJS
 * Support a few other DBs like MySQL and SQLite
-* When viewing Timestamp with Timezone, display that time in various timezones.
