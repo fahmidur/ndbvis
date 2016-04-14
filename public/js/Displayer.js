@@ -151,7 +151,7 @@ Displayer.prototype.display = function(rowData, prop, prop2type) {
     }
     else
     if(typeof data === 'object') {
-      if(data === 'null') {
+      if(data === null) {
         self.$body.html("<span class='null'>null</span>");
       } else {
         self.$body.html(JSON.stringify(data));  
