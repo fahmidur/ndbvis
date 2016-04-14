@@ -131,6 +131,9 @@ Displayer.prototype.display = function(rowData, prop, prop2type) {
     }
     self.$fields.append($button);
   }
+  if(!self.isLandscape()) {
+    self.$fields.hide();
+  }
   self.$content.append(self.$fields);
   self.$fields.find('.prop').on('click', function(e) {
     var propName = $(this).data('name');
@@ -139,7 +142,12 @@ Displayer.prototype.display = function(rowData, prop, prop2type) {
 
   self.$main = $("<div class='main'></div>");
     self.$cprop = $("<div class='cprop'><span class='name'>"+prop+"</span><span class='type'>("+propType+")</span></div>");
-      self.$ftb = $("<span class='field-toggle'><i class='fa fa-chevron-left'></i></span>");
+      self.$ftb = $("<span class='field-toggle fbtn'></span>");
+      if(self.isLandscape()) {
+        self.$ftb.html("<i class='fa fa-chevron-left'></i>");
+      } else {
+        self.$ftb.html("<i class='fa fa-chevron-right'></i>");
+      }
       self.$cprop.prepend(self.$ftb);
     self.$main.append(self.$cprop);
 
@@ -174,6 +182,14 @@ Displayer.prototype.display = function(rowData, prop, prop2type) {
   self.show();
   self.adjustWindow();
 };
+
+Displayer.prototype.isLandscape = function() {
+  var self = this;
+  if(self.rWindowWidth >= self.rWindowHeight) {
+    return true;
+  }
+  return false;
+}
 
 Displayer.prototype.adjustWindow = function() {
   var self = this;
