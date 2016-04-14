@@ -50,14 +50,13 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
   var sqlEditor = new SQLEditor({
     input_id: 'SQLEditor-'+pageID+"-input",
     output_id: 'SQLEditor-'+pageID+"-output",
-    pageID: pageID,
-    editorPage: self
+    pageID: pageID
   });
 
+  var newborn = (typeof fromRestorer === 'undefined') ? true : false;
   function activatePage(preventStore) {
-    var this_page = self.pages[pageID];
     var old_page = self.pages[self.active_pageID];
-    if(old_page && this_page.newborn) {
+    if(old_page && newborn) {
       sqlEditor.connectionManager.setCurrentDB(old_page.sqlEditor.connectionManager.getCurrentDB());
     }
     self.hideAllPages();
@@ -69,6 +68,7 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
     if(typeof preventStore === 'undefined') {
       if(restorer && typeof restorer.store === 'function') {restorer.store('EditorPage. activatePage');}  
     }
+    newborn = false;
   }
 
   self.pages[pageID] = {

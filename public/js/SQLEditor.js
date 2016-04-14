@@ -20,12 +20,6 @@ var SQLEditor = function(opts) {
   if(!self.pageID) {
     throw "SQLEditor. pageID missing";
   }
-
-  if(!opts.editorPage) {
-    throw "SQLEditor. editorPage missing";
-  }
-  self.editorPage = opts.editorPage;
-
   self.cntrl_engaged = false;
 
   self.$input.on('keydown', function(e) {
@@ -283,7 +277,6 @@ SQLEditor.prototype.execute = function() { var self = this;
       }
     }
     self.$wIcon.hide();
-    self.editorPage[self.pageID].newborn = false;
   });
 
   if(restorer && typeof restorer.store === 'function') {restorer.store('SQLEditor. execute');}
