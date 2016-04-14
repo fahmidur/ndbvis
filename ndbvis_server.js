@@ -4,6 +4,8 @@ var app = express();
 var bodyParser = require('body-parser');
 
 var clients = {};
+
+var conf = JSON.parse(fs.readFileSync("config.json"));
 var databases = JSON.parse(fs.readFileSync('databases.json'));
 
 console.log('databases = ', databases);
@@ -103,10 +105,9 @@ app.post('/dbs/:dbname/exec', function(req, res) {
 
   });
 
-  
 });
 
-var server = app.listen(3131, function() {
+var server = app.listen(conf.server.port, conf.server.bind, function() {
   var host = server.address().address;
   var port = server.address().port;
 
