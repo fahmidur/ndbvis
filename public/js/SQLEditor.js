@@ -164,6 +164,9 @@ SQLEditor.prototype.translateType = function(type) {
   if(type === 'character varying') {
     return 'varchar';
   }
+  if(type === 'timestamp with time zone') {
+    return 'timestamp_tz';
+  }
   return type;
 }
 
