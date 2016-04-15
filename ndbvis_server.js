@@ -1,6 +1,8 @@
 var fs = require('fs');
 var https = require('https');
 var express = require('express');
+var session = require('express-session');
+var FileStore = require('session-file-store')(session);
 var app = express();
 var bodyParser = require('body-parser');
 var argv = require('yargs').argv;
@@ -32,7 +34,15 @@ console.log("--- Config Path: ", confpath);
 var conf = JSON.parse(fs.readFileSync(confpath));
 var databases = JSON.parse(fs.readFileSync('databases.json'));
 
+
 app.use(express.static(__dirname + '/public'));
+
+app.use(session({
+  store: new FileStore({
+    path: conf.server.session.path
+  }),
+  secret: conf.server.session.secret
+}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -2,6 +2,10 @@
   "server": {
     "port": 3131,
     "bind": "0.0.0.0",
+    "session": {
+      "secret": "e5f22846cd54869dbd361b67099c51a5aaa69ccb267a9361dd2b24d9210ad866",
+      "path": "./sessions"
+    },
     "tls": {
       "priv": "certs/server.key",
       "publ": "certs/server.pem"
