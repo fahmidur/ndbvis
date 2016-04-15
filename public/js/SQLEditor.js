@@ -229,7 +229,6 @@ SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
   self.$output.empty(); self.$output.get(0).appendChild(table);
 
   self.$output.find('tbody td').on('click', function(e) {
-    console.log("** CLICK **");
     var $this = $(this);
     var rowNum = $this.data('row');
     var prop = $this.data('prop');
