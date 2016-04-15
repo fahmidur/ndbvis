@@ -21,7 +21,7 @@ and so this project is the result of much frustration.
 * Create a databases.json (see example-databases.json)
 * Run: npm install
 * Edit config.json
-  * Choose a reasonably difficult admin password
+  * Choose an admin username/password (defaults to admin/d3faultpassw0rd)
   * Choose a port
   * Choose a bind address (defaults to 0.0.0.0)
   * Choose an x509 cert and private key (or use self-signed as instructed below)
