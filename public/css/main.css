@@ -332,4 +332,5 @@ body {
 .topbar a {
   color: #ddd;
   font-family: monospace;
+  text-decoration: none;
 }
