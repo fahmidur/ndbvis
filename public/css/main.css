@@ -279,3 +279,42 @@ body {
 .DisplayerWindow .fbtn:hover {
   color: orange;
 }
+.box {
+  border: 1px solid #fff;
+  margin-top:1em !important;
+  padding:1em;
+  background-color: #ddd;
+  box-shadow: 0px 0px 5px #fff;
+  float: none;
+  margin: 0 auto;
+  max-width: 400px;
+  padding-bottom: 2em;
+}
+.box .field {
+  display: block;
+  width: 100%;
+  border:0px solid red;
+  padding:0.5em;
+  outline: none;
+  color: #222;
+  font-weight: bold;
+}
+.box .logo {
+  font-size: large;
+  color: #444;
+  text-align: center;
+}
+.box button {
+  display: block;
+  width:100%;
+  background-color: #fff;
+  border: 1px solid #999;
+  padding: 1em;
+  text-transform: uppercase;
+  color: #222;
+  outline: none;
+}
+.box button:hover {
+  color: orange;
+  border: 1px solid orange;
+}

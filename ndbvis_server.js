@@ -6,6 +6,7 @@ var FileStore = require('session-file-store')(session);
 var app = express();
 var bodyParser = require('body-parser');
 var argv = require('yargs').argv;
+var ejs = require('ejs');
 
 var clients = {};
 
@@ -34,6 +35,8 @@ console.log("--- Config Path: ", confpath);
 var conf = JSON.parse(fs.readFileSync(confpath));
 var databases = JSON.parse(fs.readFileSync('databases.json'));
 
+app.set('view engine', 'ejs');
+app.engine('ejs', ejs.renderFile);
 
 app.use(express.static(__dirname + '/public'));
 
@@ -51,14 +54,34 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Login MiddleWare
 app.use(function(req, res, next) {
   var sess = req.session;
-  if(!sess.signed_in) {
-    console.log('** WARNING: not signed in');
+  if(!sess.username && req.path !== '/login') {
+    console.log('** WARNING: not signed in. req.path = ', req.path);
+    res.redirect('/login');
+    return;
   }
   next();
 });
 
+app.get('/login', function(req, res) {
+  res.render('login.html.ejs');
+});
+
+app.post('/login', function(req, res) {
+  var accounts = conf.server.accounts;
+  var username = req.body.username;
+  var password = req.body.password;
+
+  if(accounts[username] === password) {
+    req.session.username = username;
+    res.redirect('/');
+    return;
+  }
+  
+  res.redirect('/login');
+});
+
 app.get('/', function(req, res) {
-  res.render(__dirname + '/public/index.html');
+  res.render('index.html.ejs');
 });
 
 app.get('/dbs', function(req, res) {

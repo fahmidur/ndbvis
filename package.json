@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "body-parser": "^1.13.3",
+    "ejs": "^2.4.1",
     "express": "^5.0.0-alpha.2",
     "express-session": "^1.13.0",
     "multer": "^1.0.3",
