@@ -39,7 +39,8 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(session({
   store: new FileStore({
-    path: conf.server.session.path
+    path: conf.server.session.path,
+    encrypt: true
   }),
   secret: conf.server.session.secret
 }));

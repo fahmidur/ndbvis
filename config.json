@@ -9,6 +9,9 @@
     "tls": {
       "priv": "certs/server.key",
       "publ": "certs/server.pem"
+    },
+    "security": {
+      "password": "d3faultpassw0rd"
     }
   }
 }
