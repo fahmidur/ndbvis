@@ -4,7 +4,7 @@ A simplistic web-based database query tool with a backend in NodeJS.
 The trial version of DBVisualizer prevents you from creating new tabs,
 and so this project is the result of much frustration.
 
-![The SQL Editor](https://github.com/fahmidur/ndbvis/blob/master/screenshots/ss001.png)
+![The SQL Editor](https://raw.githubusercontent.com/fahmidur/ndbvis/master/screenshots/ss001.png)
 
 ### Key Features
 
@@ -41,5 +41,5 @@ node ndbvis.js --config /path/to/custom/config.json
 
 ### More Screenshots
 
-![Record Display Window](https://github.com/fahmidur/ndbvis/blob/master/screenshots/ss002.png)
-![Sign-In Page](https://github.com/fahmidur/ndbvis/blob/master/screenshots/ss003.png)
+![Record Display Window](https://raw.githubusercontent.com/fahmidur/ndbvis/master/screenshots/ss002.png)
+![Sign-In Page](https://raw.githubusercontent.com/fahmidur/ndbvis/master/screenshots/ss003.png)
