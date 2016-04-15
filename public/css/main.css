@@ -318,3 +318,17 @@ body {
   color: orange;
   border: 1px solid orange;
 }
+.topbar {
+  background-color: #333;
+  margin-bottom:0.5em;
+  overflow: auto;
+  padding:0.2em;
+  font-size: small;
+}
+.topbar .logo {
+  font-weight: bold;
+}
+.topbar a {
+  color: #ddd;
+  font-family: monospace;
+}

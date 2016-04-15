@@ -54,7 +54,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Login MiddleWare
 app.use(function(req, res, next) {
   var sess = req.session;
-  if(!sess.username && req.path !== '/login') {
+  if(!sess.username && req.path !== '/login' && req.path !== '/logout') {
     console.log('** WARNING: not signed in. req.path = ', req.path);
     res.redirect('/login');
     return;
@@ -64,6 +64,11 @@ app.use(function(req, res, next) {
 
 app.get('/login', function(req, res) {
   res.render('login.html.ejs');
+});
+
+app.get('/logout', function(req, res) {
+  req.session.destroy();
+  res.redirect('/login');
 });
 
 app.post('/login', function(req, res) {
