@@ -1,4 +1,5 @@
 var fs = require('fs');
+var https = require('https');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -128,9 +129,11 @@ app.post('/dbs/:dbname/exec', function(req, res) {
 
 });
 
-var server = app.listen(conf.server.port, conf.server.bind, function() {
-  var host = server.address().address;
-  var port = server.address().port;
+var privKey = fs.readFileSync(conf.server.tls.priv).toString();
+var publKey = fs.readFileSync(conf.server.tls.publ).toString();
+var creds = {key: privKey, cert: publKey};
 
-  console.log('Listening on http://'+host+":"+port);
-});
+
+var httpsServer = https.createServer(creds, app);
+console.log('Listening on https://'+conf.server.bind+':'+conf.server.port);
+httpsServer.listen(conf.server.port, conf.server.bind);

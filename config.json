@@ -1,6 +1,10 @@
 {
   "server": {
     "port": 3131,
-    "bind": "0.0.0.0" 
+    "bind": "0.0.0.0",
+    "tls": {
+      "priv": "certs/server.key",
+      "publ": "certs/server.pem"
+    }
   }
 }
