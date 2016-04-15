@@ -51,8 +51,8 @@ app.get('/', function(req, res) {
   res.render(__dirname + '/public/index.html');
 });
 
-app.get('/databases', function(req, res) {
-  res.json(databases);
+app.get('/dbs', function(req, res) {
+  res.json(Object.keys(databases));
 });
 
 app.post('/dbs/:dbname/exec', function(req, res) {

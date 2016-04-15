@@ -9,7 +9,7 @@ var ConnectionManager = function(opts) {
 
   self.current_dbname = null;
 
-  $.getJSON('/databases', function(data) {
+  $.getJSON('/dbs', function(data) {
     ConnectionManager.databases = data;
     self.render();
   });
@@ -48,8 +48,8 @@ ConnectionManager.prototype.render = function() {
   self.$element.empty();
 
   self.$select = $("<select class='pull-right'></select");
-  for(var dbname in ConnectionManager.databases) { 
-    var connString = ConnectionManager.databases[dbname];
+  for(var i = 0; i < ConnectionManager.databases.length; i++) { 
+    var dbname = ConnectionManager.databases[i];
     var optionNode = $("<option value='"+dbname+"'>"+dbname+"</option>");
     self.$select.append(optionNode);
   }
