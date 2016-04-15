@@ -45,7 +45,9 @@ app.use(session({
     path: conf.server.session.path,
     encrypt: true
   }),
-  secret: conf.server.session.secret
+  secret: conf.server.session.secret,
+  resave: true,
+  saveUninitialized: false
 }));
 
 app.use(bodyParser.json());
@@ -55,7 +57,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(function(req, res, next) {
   var sess = req.session;
   if(!sess.username && req.path !== '/login' && req.path !== '/logout') {
-    console.log('** WARNING: not signed in. req.path = ', req.path);
+    console.log('[WARNING] Not Signed In. Redirecting to Login. req.path = ', req.path);
     res.redirect('/login');
     return;
   }
