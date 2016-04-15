@@ -48,6 +48,15 @@ app.use(session({
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Login MiddleWare
+app.use(function(req, res, next) {
+  var sess = req.session;
+  if(!sess.signed_in) {
+    console.log('** WARNING: not signed in');
+  }
+  next();
+});
+
 app.get('/', function(req, res) {
   res.render(__dirname + '/public/index.html');
 });
