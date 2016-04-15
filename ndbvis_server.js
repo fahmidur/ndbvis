@@ -2,13 +2,34 @@ var fs = require('fs');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var argv = require('yargs').argv;
 
 var clients = {};
 
-var conf = JSON.parse(fs.readFileSync("config.json"));
+function fileExists(path) {
+  try {
+    fs.accessSync(path, fs.F_OK);
+  } catch(e) {
+    return false;
+  }
+  return true;
+}
+function dieWithUsage() {
+  console.log("node ndbvis_server.js [--config /path/to/config.json]");
+  process.exit(1);
+}
+var confpath = __dirname + '/' + 'config.json';
+if(argv.config) {
+  confpath = argv.config;
+  console.log("--- ARGV. Using Custom Config Path: ", confpath);
+}
+if(!fileExists(confpath)) {
+  console.error('--- ERROR: No such file at: ', confpath);
+  dieWithUsage();
+}
+console.log("--- Config Path: ", confpath);
+var conf = JSON.parse(fs.readFileSync(confpath));
 var databases = JSON.parse(fs.readFileSync('databases.json'));
-
-console.log('databases = ', databases);
 
 app.use(express.static(__dirname + '/public'));
 
