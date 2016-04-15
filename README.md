@@ -5,8 +5,6 @@ The trial version of DBVisualizer prevents you from creating new tabs,
 and so this project is the result of much frustration.
 
 ![The SQL Editor](https://github.com/fahmidur/ndbvis/blob/master/screenshots/ss001.png)
-![Record Display Window](https://github.com/fahmidur/ndbvis/blob/master/screenshots/ss002.png)
-![Sign-In Page](https://github.com/fahmidur/ndbvis/blob/master/screenshots/ss003.png)
 
 ### Key Features
 
@@ -40,3 +38,8 @@ node ndbvis.js --config /path/to/custom/config.json
 ### TODO Subset
 * Rewrite backend in Go-lang - users shouldn't have to install NodeJS
 * Support a few other DBs like MySQL and SQLite
+
+### More Screenshots
+
+![Record Display Window](https://github.com/fahmidur/ndbvis/blob/master/screenshots/ss002.png)
+![Sign-In Page](https://github.com/fahmidur/ndbvis/blob/master/screenshots/ss003.png)
