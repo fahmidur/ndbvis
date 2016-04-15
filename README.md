@@ -4,7 +4,7 @@ A simplistic web-based database query tool with a backend in NodeJS.
 The trial version of DBVisualizer prevents you from creating new tabs,
 and so this project is the result of much frustration.
 
-## Key Features
+### Key Features
 
 * Currently only supports Postgres
 * Cntrl+Enter to Execute the query
@@ -13,7 +13,7 @@ and so this project is the result of much frustration.
 * Fluid, mobile-first, built on Bootstrap - works well on mobile
 * Saves state to LocalStore, open tabs are preserved on the same browser
 
-## Installation
+### Installation
 * Install NodeJS
 * Download this repository
 * Create a databases.json (see example-databases.json)
@@ -33,6 +33,6 @@ node ndbvis.js --config /path/to/custom/config.json
 ```
 
 
-## TODO Subset
+### TODO Subset
 * Rewrite backend in Go-lang - users shouldn't have to install NodeJS
 * Support a few other DBs like MySQL and SQLite
