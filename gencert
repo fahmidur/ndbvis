@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+mkdir -p ./certs
+openssl genrsa -out ./certs/server.key 2048
+openssl req -new -x509 -key ./certs/server.key -out ./certs/server.pem -days 3650 -subj "/C=US/ST=California/L=LosAngeles/CN=BlaBla"
