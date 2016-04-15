@@ -280,11 +280,11 @@ body {
   color: orange;
 }
 .box {
-  border: 1px solid #fff;
-  margin-top:1em !important;
-  padding:1em;
-  background-color: #ddd;
-  box-shadow: 0px 0px 5px #fff;
+  border: 1px solid #888;
+  margin-top: 1em !important;
+  padding: 1em;
+  background-color: #555;
+  box-shadow: 0px 0px 5px #666;
   float: none;
   margin: 0 auto;
   max-width: 400px;
@@ -301,8 +301,9 @@ body {
 }
 .box .logo {
   font-size: large;
-  color: #444;
+  color: #bbb;
   text-align: center;
+  margin-bottom:0.5em;
 }
 .box button {
   display: block;
