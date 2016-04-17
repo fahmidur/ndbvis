@@ -6,3 +6,6 @@
 - Rewrite backend in Go-lang - users shouldn't have to install NodeJS
 - Support a few other DBs like MySQL and SQLite
 - When viewing Timestamp with Timezone, display that time in various timezones.
+- Support Users and Permissions
+- User Sign-In, Password Recovery, and Activity Tracking
+- Support PAM authentication
