@@ -43,11 +43,13 @@ app.use(express.static(__dirname + '/public'));
 app.use(session({
   store: new FileStore({
     path: conf.server.session.path,
-    encrypt: true
+    encrypt: true,
+    ttl: 2592000 // 30 Days
   }),
   secret: conf.server.session.secret,
   resave: true,
-  saveUninitialized: false
+  saveUninitialized: false,
+  expires: false
 }));
 
 app.use(bodyParser.json());
