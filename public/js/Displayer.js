@@ -119,15 +119,21 @@ Displayer.prototype.makeJSON_pretty = function(obj, tablevel) {
   console.log('********* tablevel = ', tablevel, 'tab = |'+tab+'|');
   var out = prefix1 + (isArray ? '[' : '{') + "\n";
 
+  var keylength = isArray ? obj.length : Object.keys(obj).length;
+  var indexlimit = keylength-1;
+  var index = 0;
   for(var k in obj) { var v = obj[k];
     if(typeof v === 'object') {
       out += prefix2 + ((typeof k === 'string') ? "\""+k+"\"" : k) + ":\n";
       out += self.makeJSON_pretty(v,tablevel+1);
     } else {
-      out += prefix2 + "\""+k+"\": " + (typeof v === 'string' ? "\""+v+"\"" : v) + "\n";
+      out += prefix2 + "\""+k+"\": " + (typeof v === 'string' ? "\""+v+"\"" : v);
     }
+    if(index < indexlimit) { out += ","; }
+    out += "\n";
+    index++;
   }
-  out += prefix1 + (isArray ? ']' : '}') + "\n";
+  out += prefix1 + (isArray ? ']' : '}');
 
   return out;
 };
