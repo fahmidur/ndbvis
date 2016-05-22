@@ -360,4 +360,8 @@ body {
 pre {
   white-space: pre-wrap !important;
   word-wrap: break-word !important;
+  background-color: #333;
+  color: #fff;
+  border-radius: 0px;
+  border: 1px solid #444;
 }
