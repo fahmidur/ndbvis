@@ -334,3 +334,26 @@ body {
   font-family: monospace;
   text-decoration: none;
 }
+.vheader {
+  margin-bottom:0.5em;
+  padding-left:1em;
+}
+.vbtn {
+  margin-right: 0.2em;
+  border: 1px solid #655;
+  padding: 0.2em;
+  background-color: #444;
+  text-transform: uppercase;
+  cursor: pointer;
+  user-select: none;
+  padding-left:0.5em;
+  padding-right:0.5em;
+  font-weight: bold;
+}
+.vbtn.active {
+  color: orange;
+  border-color: orange;
+}
+.vbtn:hover {
+  color: orange;
+}

@@ -57,7 +57,7 @@ Displayer.displayify = function(str, trimSize) {
   }
   if(typeof trimSize !== 'undefined' && typeof trimSize === 'number') {
     if(str.length > trimSize) {
-      str = str.substring(0, trimSize);  
+      str = str.substring(0, trimSize);
       str += '...';
     }
   }
@@ -104,8 +104,26 @@ Displayer.prototype.wireRenderJSON = function(el) {
       t.parent().next('.json-data').find('.json-x-bt').removeClass('fa-minus').addClass('fa-plus');
       t.removeClass('fa-minus').addClass('fa-plus');
     }
-  });  
-}
+  });
+};
+
+Displayer.prototype.makeJSON = function(obj) {
+  var self = this;
+
+  var $el = $("<div class='makeJSON'></div>");
+
+  var $header = $("<div class='makeJSON-header vheader'></div>");
+    var $btnRaw = $("<span class='vbtn active'>Raw</span>"); $header.append($btnRaw);
+    var $btnPretty = $("<span class='vbtn'>Pretty</span>"); $header.append($btnPretty);
+    var $btnTree = $("<span class='vbtn'>Tree</span>"); $header.append($btnTree);
+  $el.append($header);
+
+  var $body = $("<div class='makeJSON-body'></div>");
+  $body.html(JSON.stringify(obj));
+  $el.append($body);
+
+  return $el
+};
 
 Displayer.prototype.display = function(rowData, prop, prop2type) {
   var self = this;
@@ -152,17 +170,20 @@ Displayer.prototype.display = function(rowData, prop, prop2type) {
     self.$main.append(self.$cprop);
 
     self.$body = $("<div class='body'></div>");
-    
+
 
     if(typeof data === 'string' || typeof data === 'number') {
-      self.$body.html(data);  
+      self.$body.html(data);
     }
     else
     if(typeof data === 'object') {
       if(data === null) {
         self.$body.html("<span class='null'>null</span>");
       } else {
-        self.$body.html(JSON.stringify(data));  
+        self.$body.empty();
+        var jsonNode = self.makeJSON(data);
+        self.$body.append(jsonNode);
+        // self.$body.html(JSON.stringify(data));
       }
     }
     self.$main.append(self.$body);
