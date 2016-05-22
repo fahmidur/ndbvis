@@ -357,3 +357,7 @@ body {
 .vbtn:hover {
   color: orange;
 }
+pre {
+  white-space: pre-wrap !important;
+  word-wrap: break-word !important;
+}

@@ -107,20 +107,71 @@ Displayer.prototype.wireRenderJSON = function(el) {
   });
 };
 
+Displayer.prototype.makeJSON_pretty = function(obj, tablevel) {
+  var self = this;
+
+  if(typeof tablevel === 'undefined') { tablevel = 0; }
+  var isArray = (obj instanceof Array);
+
+  var tab = "  ";
+  var prefix1 = (new Array(tablevel+1)).join(tab);
+  var prefix2 = (new Array(tablevel+2)).join(tab);
+  console.log('********* tablevel = ', tablevel, 'tab = |'+tab+'|');
+  var out = prefix1 + (isArray ? '[' : '{') + "\n";
+
+  for(var k in obj) { var v = obj[k];
+    if(typeof v === 'object') {
+      out += prefix2 + ((typeof k === 'string') ? "\""+k+"\"" : k) + ":\n";
+      out += self.makeJSON_pretty(v,tablevel+1);
+    } else {
+      out += prefix2 + "\""+k+"\": " + (typeof v === 'string' ? "\""+v+"\"" : v) + "\n";
+    }
+  }
+  out += prefix1 + (isArray ? ']' : '}') + "\n";
+
+  return out;
+};
 Displayer.prototype.makeJSON = function(obj) {
   var self = this;
 
   var $el = $("<div class='makeJSON'></div>");
 
   var $header = $("<div class='makeJSON-header vheader'></div>");
-    var $btnRaw = $("<span class='vbtn active'>Raw</span>"); $header.append($btnRaw);
-    var $btnPretty = $("<span class='vbtn'>Pretty</span>"); $header.append($btnPretty);
-    var $btnTree = $("<span class='vbtn'>Tree</span>"); $header.append($btnTree);
+    var $btnRaw = $("<span class='vbtn active' data-format='raw'>Raw</span>"); $header.append($btnRaw);
+    var $btnPretty = $("<span class='vbtn' data-format='pretty'>Pretty</span>"); $header.append($btnPretty);
+    var $btnTree = $("<span class='vbtn' data-format='tree'>Tree</span>"); $header.append($btnTree);
   $el.append($header);
 
+  var bfs = {};
   var $body = $("<div class='makeJSON-body'></div>");
-  $body.html(JSON.stringify(obj));
+    $bodyRaw = $("<pre class='makeJSON-bodyFormat format format-raw'></pre>");
+    $bodyRaw.html(JSON.stringify(obj));
+    $body.append($bodyRaw); bfs['raw'] = $bodyRaw;
+
+    $bodyPretty = $("<pre class='makeJSON-body format format-pretty'></pre>");
+    var t = self.makeJSON_pretty(obj);
+    console.log("*************** t = \n", t);
+    $bodyPretty.html(t);
+    $body.append($bodyPretty); bfs['pretty'] = $bodyPretty;
+
   $el.append($body);
+
+  var $vbtns = $header.find('.vbtn');
+  $vbtns.on('click', function() {
+    $vbtns.removeClass('active');
+    var $this = $(this);
+    $this.addClass('active');
+
+    var format = $this.data('format');
+    console.log('********************** data.format = ', format);
+    var bf = bfs[format];
+    if(bf.length > 0) {
+      for(var k in bfs) { bfs[k].hide(); }
+      bf.show();
+    }
+  });
+
+  $vbtns[0].click();
 
   return $el
 };
