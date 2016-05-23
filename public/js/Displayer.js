@@ -137,15 +137,16 @@ Displayer.prototype.makeJSON_pretty = function(obj, tablevel) {
 
   return out;
 };
-Displayer.prototype.makeJSON = function(obj) {
+Displayer.prototype.makeJSON = function(obj, viewFormat) {
   var self = this;
 
   var $el = $("<div class='makeJSON'></div>");
 
+	var btnFF = {};
   var $header = $("<div class='makeJSON-header vheader'></div>");
-    var $btnRaw = $("<span class='vbtn active' data-format='raw'>Raw</span>"); $header.append($btnRaw);
-    var $btnPretty = $("<span class='vbtn' data-format='pretty'>Pretty</span>"); $header.append($btnPretty);
-    var $btnTree = $("<span class='vbtn' data-format='tree'>Tree</span>"); $header.append($btnTree);
+    var $btnRaw = $("<span class='vbtn active' data-format='raw'>Raw</span>"); $header.append($btnRaw); btnFF['raw'] = $btnRaw;
+    var $btnPretty = $("<span class='vbtn' data-format='pretty'>Pretty</span>"); $header.append($btnPretty); btnFF['pretty'] = $btnPretty;
+    // var $btnTree = $("<span class='vbtn' data-format='tree'>Tree</span>"); $header.append($btnTree); btnFF['tree'] = $btnTree;
   $el.append($header);
 
   var bfs = {};
@@ -155,9 +156,7 @@ Displayer.prototype.makeJSON = function(obj) {
     $body.append($bodyRaw); bfs['raw'] = $bodyRaw;
 
     $bodyPretty = $("<pre class='makeJSON-body format format-pretty'></pre>");
-    var t = self.makeJSON_pretty(obj);
-    console.log("*************** t = \n", t);
-    $bodyPretty.html(t);
+    $bodyPretty.html(self.makeJSON_pretty(obj));
     $body.append($bodyPretty); bfs['pretty'] = $bodyPretty;
 
   $el.append($body);
@@ -169,7 +168,6 @@ Displayer.prototype.makeJSON = function(obj) {
     $this.addClass('active');
 
     var format = $this.data('format');
-    console.log('********************** data.format = ', format);
     var bf = bfs[format];
     if(bf.length > 0) {
       for(var k in bfs) { bfs[k].hide(); }
@@ -177,7 +175,7 @@ Displayer.prototype.makeJSON = function(obj) {
     }
   });
 
-  $vbtns[0].click();
+  btnFF[viewFormat].click();
 
   return $el
 };
@@ -228,9 +226,22 @@ Displayer.prototype.display = function(rowData, prop, prop2type) {
 
     self.$body = $("<div class='body'></div>");
 
-
-    if(typeof data === 'string' || typeof data === 'number') {
+    if(typeof data === 'number') {
       self.$body.html(data);
+    }
+    else
+    if(typeof data === 'string') {
+      if(data.length >= 2 && data.match(/^\s*[\{\[].*[\]\}]\s*$/)) {
+        try {
+          var obj = JSON.parse(data.replace(/^\s*|\s*$/g, ''));
+          self.$body.empty().append(self.makeJSON(obj, 'pretty'));
+        } catch(err) {
+          console.error('JSON PARSE_ERROR. err = ', err);
+          self.$body.html(data);
+        }
+      } else {
+        self.$body.html(data);
+      }
     }
     else
     if(typeof data === 'object') {
@@ -238,9 +249,7 @@ Displayer.prototype.display = function(rowData, prop, prop2type) {
         self.$body.html("<span class='null'>null</span>");
       } else {
         self.$body.empty();
-        var jsonNode = self.makeJSON(data);
-        self.$body.append(jsonNode);
-        // self.$body.html(JSON.stringify(data));
+        self.$body.append(self.makeJSON(data, 'pretty'));
       }
     }
     self.$main.append(self.$body);
