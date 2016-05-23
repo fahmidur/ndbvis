@@ -116,7 +116,6 @@ Displayer.prototype.makeJSON_pretty = function(obj, tablevel) {
   var tab = "  ";
   var prefix1 = (new Array(tablevel+1)).join(tab);
   var prefix2 = (new Array(tablevel+2)).join(tab);
-  console.log('********* tablevel = ', tablevel, 'tab = |'+tab+'|');
   var out = prefix1 + (isArray ? '[' : '{') + "\n";
 
   var keylength = isArray ? obj.length : Object.keys(obj).length;
