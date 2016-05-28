@@ -56,6 +56,8 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
   var newborn = (typeof fromRestorer === 'undefined') ? true : false;
   function activatePage(preventStore) {
     var old_page = self.pages[self.active_pageID];
+    // Newborn pages use the connection manager
+    // of the previously active page 'old_page'
     if(old_page && newborn) {
       sqlEditor.connectionManager.setCurrentDB(old_page.sqlEditor.connectionManager.getCurrentDB());
     }
