@@ -22,6 +22,30 @@ var EditorPage = function(opts) { var self = this;
     self.addPage();
   });
 
+  self.cntrl_engaged = false;
+  self.$body = $('body');
+  self.$body.on('keydown', function(e) {
+    if(e.keyCode === 17) { self.cntrl_engaged = true; }
+    if(self.cntrl_engaged && (e.keyCode === 188 || e.keyCode === 190)) { // ',' '.'
+      var atab = self.pages[self.active_pageID].el.tab;
+      var ntab;
+      if(e.keyCode === 188) { // ','
+        ntab = (atab.prev('.tab'));
+        ntab = (ntab && ntab.length > 0) ? ntab : atab.parent().find('.tab:last');
+        ntab.click();
+      }
+      else
+      if(e.keyCode === 190) { // '.'
+        ntab = atab.next('.tab');
+        ntab = (ntab && ntab.length > 0) ? ntab : atab.parent().find('.tab:first');
+        ntab.click();
+      }
+    }
+  });
+  self.$body.on('keyup', function(e) {
+    if(e.keyCode === 17) { self.cntr_engaged = false; }
+  });
+
   self.active_pageID_history = [];
   self.active_pageID = null;
   console.log('EditorPage. self = ', self);
@@ -38,7 +62,7 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
   }
   
 
-  var tab = $("<li><a href='#'>"+pageID+"&nbsp;<i class='fa fa-times-circle EditorPage_closeTabBtn' id='EditorPage_closeTabBtn-"+pageID+"'></i></a></li>");
+  var tab = $("<li class='tab'><a href='#'>"+pageID+"&nbsp;<i class='fa fa-times-circle EditorPage_closeTabBtn' id='EditorPage_closeTabBtn-"+pageID+"'></i></a></li>");
   tab.insertBefore(self.$addPageBtn);
 
   var page = $("<div class='page'><textarea class='inputarea' id='SQLEditor-"+pageID+"-input'></textarea><div class='output' id='SQLEditor-"+pageID+"-output'></div></div>");
