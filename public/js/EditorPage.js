@@ -43,7 +43,7 @@ var EditorPage = function(opts) { var self = this;
     }
   });
   self.$body.on('keyup', function(e) {
-    if(e.keyCode === 17) { self.cntr_engaged = false; }
+    if(e.keyCode === 17) { self.cntrl_engaged = false; }
   });
 
   self.active_pageID_history = [];
@@ -57,10 +57,10 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
   var pageTimestamp = ""+(new Date()).getTime();
   if(typeof override_pageID !== 'undefined') {
     pageID = override_pageID;
-  } else {  
-    pageID = parseInt(pageNumber+pageTimestamp).toString(16);  
+  } else {
+    pageID = parseInt(pageNumber+pageTimestamp).toString(16);
   }
-  
+
 
   var tab = $("<li class='tab'><a href='#'>"+pageID+"&nbsp;<i class='fa fa-times-circle EditorPage_closeTabBtn' id='EditorPage_closeTabBtn-"+pageID+"'></i></a></li>");
   tab.insertBefore(self.$addPageBtn);
@@ -92,7 +92,7 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
     self.active_pageID_history.unshift(pageID);
     sqlEditor.focus();
     if(typeof preventStore === 'undefined') {
-      if(restorer && typeof restorer.store === 'function') {restorer.store('EditorPage. activatePage');}  
+      if(restorer && typeof restorer.store === 'function') {restorer.store('EditorPage. activatePage');}
     }
     newborn = false;
   }
@@ -129,7 +129,7 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
     self.pages[new_history[0]].fn.activatePage();
   });
 
-  
+
 
   tab.on('click', function(e) { activatePage(); });
   if(typeof fromRestorer === 'undefined') {
