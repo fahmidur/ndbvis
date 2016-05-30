@@ -23,6 +23,11 @@ var EditorPage = function(opts) { var self = this;
   });
 
   self.cntrl_engaged = false;
+  document.addEventListener('visibilitychange', function(){
+    console.log('EditorPage. visibilitychange. resetting cntrl_engaged');
+    self.cntrl_engaged = false;
+  });
+
   self.$body = $('body');
   self.$body.on('keydown', function(e) {
     if(e.keyCode === 17) { self.cntrl_engaged = true; }
