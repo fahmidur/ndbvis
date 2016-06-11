@@ -96,6 +96,7 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
     self.active_pageID = pageID;
     self.active_pageID_history.unshift(pageID);
     sqlEditor.focus();
+    sqlEditor.updateInputSize();
     if(typeof preventStore === 'undefined') {
       if(restorer && typeof restorer.store === 'function') {restorer.store('EditorPage. activatePage');}
     }
