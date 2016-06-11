@@ -87,10 +87,19 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
     var old_page = self.pages[self.active_pageID];
     // Newborn pages use the connection manager
     // of the previously active page 'old_page'
-    if(old_page && newborn) {
-      sqlEditor.connectionManager.setCurrentDB(old_page.sqlEditor.connectionManager.getCurrentDB());
+    // if(old_page && newborn) {
+    //   sqlEditor.connectionManager.setCurrentDB(old_page.sqlEditor.connectionManager.getCurrentDB());
+    // }
+    // self.hideAllPages();
+    if(old_page) {
+      old_page.el.tab.removeClass('active');
+      old_page.el.page.hide();
+      
+      if(newborn) {
+        sqlEditor.connectionManager.setCurrentDB(old_page.sqlEditor.connectionManager.getCurrentDB());   
+      }
     }
-    self.hideAllPages();
+
     tab.addClass('active');
     page.show();
     self.active_pageID = pageID;
