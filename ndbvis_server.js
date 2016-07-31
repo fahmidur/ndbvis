@@ -40,17 +40,22 @@ app.engine('ejs', ejs.renderFile);
 
 app.use(express.static(__dirname + '/public'));
 
-app.use(session({
-  store: new FileStore({
-    path: conf.server.session.path,
-    encrypt: true,
-    ttl: 2592000 // 30 Days
-  }),
-  secret: conf.server.session.secret,
-  resave: true,
-  saveUninitialized: false,
-  expires: false
-}));
+app.use(
+  session({
+    store: new FileStore({
+      path: conf.server.session.path,
+      encrypt: true,
+      ttl: 2592000 // 30 Days
+    }),
+    secret: conf.server.session.secret,
+    resave: true,
+    saveUninitialized: true,
+    secure: true,
+    rolling: true,
+    expires: false,
+    name: 'ndbvis.sid'
+  })
+);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -85,7 +90,7 @@ app.post('/login', function(req, res) {
     res.redirect('/');
     return;
   }
-  
+
   res.redirect('/login');
 });
 
@@ -98,12 +103,12 @@ app.get('/dbs', function(req, res) {
 });
 
 app.post('/dbs/:dbname/exec', function(req, res) {
-  var dbname = req.params.dbname;  
+  var dbname = req.params.dbname;
   var pageID = req.body.pageID;
   var sql = req.body.sql;
   var resp = {
     echo: {
-      dbname: dbname, 
+      dbname: dbname,
       sql: sql,
       pageID: pageID
     }
@@ -125,7 +130,7 @@ app.post('/dbs/:dbname/exec', function(req, res) {
   if(sql.match(/^\s*SELECT\b/i)) {
     typeMode = true;
   }
-  
+
   client("DROP TABLE IF EXISTS "+tableName, [], function(err, rows1) {
     if(err) {
       console.log('ERR001 = ', err);
@@ -141,7 +146,7 @@ app.post('/dbs/:dbname/exec', function(req, res) {
         err.toString = err.toString().replace(/^\s*error:\s*/, '');
         resp.err = err;
         resp.errcode = 2;
-        
+
         return res.json(resp);
       }
 
@@ -150,7 +155,7 @@ app.post('/dbs/:dbname/exec', function(req, res) {
         resp.rows = rows2;
         return res.json(resp);
       }
-      
+
       client("SELECT * FROM "+tableName, [], function(err, rows3) {
         if(err) {
           console.log('ERR003 = ', err);
@@ -158,7 +163,7 @@ app.post('/dbs/:dbname/exec', function(req, res) {
           resp.errcode = 3;
         }
         resp.ok = true;
-        resp.rows = rows3; 
+        resp.rows = rows3;
 
         // WARNING: Security issue here.
         // TODO: Sanitize tableName in the SQL below
@@ -171,7 +176,7 @@ app.post('/dbs/:dbname/exec', function(req, res) {
           resp.types = rows4;
           return res.json(resp);
         });
-        
+
       });
 
     });
