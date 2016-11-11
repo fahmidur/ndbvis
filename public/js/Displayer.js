@@ -259,6 +259,10 @@ Displayer.prototype.display = function(rowData, prop, prop2type) {
         self.$body.append(self.makeJSON(data, 'pretty'));
       }
     }
+    else
+    if(typeof data === 'boolean') {
+      self.$body.html("<span class='bool-single bool-"+(!!data)+"'>"+data+"</span>");
+    }
     self.$main.append(self.$body);
 
   self.$content.append(self.$main);

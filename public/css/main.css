@@ -194,6 +194,21 @@ body {
   padding: 0.2em;
   border: 1px solid #777;
 }
+.DisplayerWindow .content .body .bool-single {
+  font-size: large;
+  padding: 0.2em;
+  border-width: 1px;
+  border-color: #ddd;
+  border-style: solid;
+}
+.DisplayerWindow .content .body .bool-single.bool-true {
+  color: #40CEA6;
+  border-color: #40CEA6;
+}
+.DisplayerWindow .content .body .bool-single.bool-false {
+  color: #B184E3;
+  border-color: #B184E3;
+}
 .DisplayerWindow .close {
   margin:0.2em;
   margin-right:0.3em;
