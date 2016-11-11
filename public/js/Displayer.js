@@ -122,11 +122,19 @@ Displayer.prototype.makeJSON_pretty = function(obj, tablevel) {
   var indexlimit = keylength-1;
   var index = 0;
   for(var k in obj) { var v = obj[k];
-    if(typeof v === 'object') {
-      out += prefix2 + ((typeof k === 'string') ? "\""+k+"\"" : k) + ":\n";
-      out += self.makeJSON_pretty(v,tablevel+1);
+    out += prefix2;
+    if(!isArray) { // Do not show Indices as keys when Array
+      out += ((typeof k === 'string') ? "\""+k+"\"" : k) + ": ";  
+    }
+    if(typeof v === 'object') { 
+      if(v === null) {
+        out += "null";
+      } else {
+        var vlen = Object.keys(v).length;
+        out += vlen == 0 ? '{}' : ("\n" + self.makeJSON_pretty(v,tablevel+1));
+      }
     } else {
-      out += prefix2 + "\""+k+"\": " + (typeof v === 'string' ? "\""+v+"\"" : v);
+      out += (typeof v === 'string' ? "\""+v+"\"" : v);
     }
     if(index < indexlimit) { out += ","; }
     out += "\n";
