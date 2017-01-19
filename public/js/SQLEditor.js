@@ -21,6 +21,10 @@ var SQLEditor = function(opts) {
     throw "SQLEditor. pageID missing";
   }
   self.cntrl_engaged = false;
+  
+  document.addEventListener('visibilitychange', function(){
+    self.cntrl_engaged = false;
+  });
 
   self.$input.on('keydown', function(e) {
     if(e.keyCode === 17) {
