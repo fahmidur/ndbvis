@@ -26,10 +26,11 @@ var EditorPage = function(opts) { var self = this;
     self.addPage();
   });
 
-  self.cntrl_engaged = false;
+  self.cntrl_engaged = false; self.cntrl_engage(false);
   document.addEventListener('visibilitychange', function(){
     console.log('EditorPage. visibilitychange. resetting cntrl_engaged');
-    self.cntrl_engaged = false;
+    //self.cntrl_engaged = false;
+    self.cntrl_engage(false);
   });
 
   self.$body = $('body');
