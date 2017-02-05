@@ -127,6 +127,17 @@ body {
 .EditorPage_closeTabBtnbtn:hover {
   color: orange;
 }
+.indicators {
+  margin-right:5px;
+  border-right: 1px dotted #ccc;
+  padding-right: 5px;
+}
+.indicator {
+  color: #222;
+}
+.indicator.active {
+  color: orange;
+}
 
 .ConnectionManager {
   min-height: 30px;

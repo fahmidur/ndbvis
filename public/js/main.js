@@ -11,7 +11,8 @@ $(function() {
   epage = new EditorPage({
     pages_id: 'pages',
     nav_id: 'nav',
-    addPageBtn_id: 'add_page_btn'
+    addPageBtn_id: 'add_page_btn',
+    indicator_cntrl_id: 'indicator_cntrl'
   });
 
   restorer = new Restorer({

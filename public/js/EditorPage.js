@@ -11,7 +11,11 @@ var EditorPage = function(opts) { var self = this;
 
   if(!opts.addPageBtn_id) { throw "EditorPage. required parameter addPageBtn_id missing"; }
   self.$addPageBtn = $('#'+opts.addPageBtn_id);
-  if(!self.$addPageBtn) { throw "EditorPage. $addPageBtn not found"; }
+  if(!self.$addPageBtn.length === 0) { throw "EditorPage. $addPageBtn not found"; }
+
+  if(!opts.indicator_cntrl_id) { throw "EditorPage. required parameter indicator_cntrl_id missing"; }
+  self.$indicatorCntrl = $('#'+opts.indicator_cntrl_id);
+  if(!self.$indicatorCntrl.length === 0) { throw "EditorPage. $indicatorCntrl not found"; }
 
   self.pages = {
 
@@ -30,7 +34,10 @@ var EditorPage = function(opts) { var self = this;
 
   self.$body = $('body');
   self.$body.on('keydown', function(e) {
-    if(e.keyCode === 17) { self.cntrl_engaged = true; }
+    if(e.keyCode === 17) { 
+      //self.cntrl_engaged = true;
+      self.cntrl_engage(true);
+    }
     if(self.cntrl_engaged && (e.keyCode === 188 || e.keyCode === 190)) { // ',' '.'
       var atab = self.pages[self.active_pageID].el.tab;
       var ntab;
@@ -48,12 +55,28 @@ var EditorPage = function(opts) { var self = this;
     }
   });
   self.$body.on('keyup', function(e) {
-    if(e.keyCode === 17) { self.cntrl_engaged = false; }
+    if(e.keyCode === 17) { 
+      //self.cntrl_engaged = false;
+      self.cntrl_engage(false);
+    }
   });
 
   self.active_pageID_history = [];
   self.active_pageID = null;
   console.log('EditorPage. self = ', self);
+};
+
+EditorPage.prototype.cntrl_engage = function(bool) {
+  var self = this;
+  if(typeof bool != 'boolean') {
+    throw "Invalid argument, expecting boolean";
+  }
+  self.cntrl_engaged = bool;
+  if(self.cntrl_engaged) {
+    self.$indicatorCntrl.addClass('active');
+  } else {
+    self.$indicatorCntrl.removeClass('active');
+  }
 };
 
 EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var self = this;
