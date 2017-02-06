@@ -134,6 +134,9 @@ body {
 }
 .indicator {
   color: #222;
+	transition-property: color;
+	transition-duration: 1s;
+	transition-timing-function: cubic-bezier(0.06, 1.47, 0.29, 0.87);
 }
 .indicator.active {
   color: orange;
