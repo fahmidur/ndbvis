@@ -169,11 +169,26 @@ SQLEditor.prototype.translateType = function(type) {
 }
 
 SQLEditor.prototype.renderRows = function(rows, types) { var self = this;
+  /*
   if(rows.length === 0) {
     self.$wIcon.hide();
     return self.$output.html("0 Rows Returned");
   }
-  var properties = Object.keys(rows[0]);
+  */
+  var prop = null;
+  var properties = null;
+  
+  if(typeof types !== 'undefined' && types instanceof Array && types.length > 0) {
+    properties = types.map(function(e) { return e.column_name; })
+  }
+  else
+  if(rows.length > 0) {
+    properties = Object.keys(rows[0]);
+  }
+  if(!properties) {
+    console.error(self.logbase, 'renderRows. Failed to compute properties');
+    return;
+  }
   self.prop_to_type = {};
 
   self.rows = rows;
