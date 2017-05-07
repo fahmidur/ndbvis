@@ -65,6 +65,7 @@ app.use(function(req, res, next) {
   var sess = req.session;
   if(!sess.username && req.path !== '/login' && req.path !== '/logout') {
     console.log('[WARNING] Not Signed In. Redirecting to Login. req.path = ', req.path);
+    req.session.destroy();
     res.redirect('/login');
     return;
   }
