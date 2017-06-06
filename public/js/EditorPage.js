@@ -39,19 +39,29 @@ var EditorPage = function(opts) { var self = this;
       //self.cntrl_engaged = true;
       self.cntrl_engage(true);
     }
-    if(self.cntrl_engaged && (e.keyCode === 188 || e.keyCode === 190)) { // ',' '.'
-      var atab = self.pages[self.active_pageID].el.tab;
+    if(self.cntrl_engaged) { // ',' '.'
+      var apid = self.active_pageID;
+      var page = apid ? self.pages[apid] : null;
+      var atab = page ? page.el.tab : null;
       var ntab;
-      if(e.keyCode === 188) { // ','
+      if(atab && e.keyCode === 188) { // ','
         ntab = (atab.prev('.tab'));
         ntab = (ntab && ntab.length > 0) ? ntab : atab.parent().find('.tab:last');
         ntab.click();
       }
       else
-      if(e.keyCode === 190) { // '.'
+      if(atab && e.keyCode === 190) { // '.'
         ntab = atab.next('.tab');
         ntab = (ntab && ntab.length > 0) ? ntab : atab.parent().find('.tab:first');
         ntab.click();
+      }
+      else
+      if(e.keyCode === 32) {
+        self.addPage();
+      }
+      else
+      if(e.keyCode === 77) {
+        atab.find('.EditorPage_closeTabBtn').click();
       }
     }
   });
@@ -165,7 +175,10 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
       }
     }
     self.active_pageID_history = new_history;
-    self.pages[new_history[0]].fn.activatePage();
+    var apage = self.pages[new_history[0]];
+    if(apage && apage.fn) {
+      apage.fn.activatePage();
+    }
   });
 
 
