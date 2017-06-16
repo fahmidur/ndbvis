@@ -176,6 +176,9 @@ EditorPage.prototype.addPage = function(override_pageID, fromRestorer) { var sel
     }
     self.active_pageID_history = new_history;
     var apage = self.pages[new_history[0]];
+    if(!apage && Object.keys(self.pages).length > 0) {
+      apage = self.pages[Object.keys(self.pages)[0]];
+    }
     if(apage && apage.fn) {
       apage.fn.activatePage();
     }
