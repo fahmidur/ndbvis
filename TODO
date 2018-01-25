@@ -9,3 +9,8 @@
 - Support Users and Permissions
 - User Sign-In, Password Recovery, and Activity Tracking
 - Support PAM authentication
+- [bug] Table cell truncation should be based on width of cell
+- [bug] Auto-limit should be off if query ends in semicolon
+- Auto-limit should be user toggleable
+- Handle expired or deleted session better, should redirect to login,
+  but in JSON request should send some flag value.
