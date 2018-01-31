@@ -14,3 +14,8 @@
 - Auto-limit should be user toggleable
 - Handle expired or deleted session better, should redirect to login,
   but in JSON request should send some flag value.
+- Possibly replace input textarea with CodeMirror.
+- Add button for prettifying input SQL. 
+  Good when examining copy-pasted SQL from some ORM
+- Detect interpolation, support form for interpolation
+  variables.
