@@ -19,3 +19,5 @@
   Good when examining copy-pasted SQL from some ORM
 - Detect interpolation, support form for interpolation
   variables.
+- Allow selecting and diffing rows/columns - This is surprisingly useful, especially
+  if you store have large json columns;
