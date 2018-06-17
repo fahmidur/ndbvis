@@ -150,12 +150,14 @@ body {
 .ConnectionManager select {
   background-color: transparent;
   min-height:30px;
-  outline: none;
+  outline: 1px solid transparent;
   border: 0px solid red;
   border-left: 1px solid #333;
   font-family: "Courier New", Monospace;
 }
-
+.ConnectionManager select:focus {
+  outline: 1px solid orange;
+}
 .ConnectionManager select option{
   color: #fff;
   font-size: large;
